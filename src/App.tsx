@@ -1,9 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import uuid from 'uuid';
+
+type listType = {
+  id: string;
+  desc: string;
+  check: boolean;
+}[]
+
+const myList: listType = [
+  {
+    id: uuid(),
+    desc: 'Gloves',
+    check: false
+  },
+  {
+    id: uuid(),
+    desc: 'Keys',
+    check: true
+  },
+  {
+    id: uuid(),
+    desc: 'Phone',
+    check: true
+  },
+  {
+    id: uuid(),
+    desc: 'Mask',
+    check: true
+  },
+  {
+    id: uuid(),
+    desc: 'Backpack',
+    check: true
+  },
+  {
+    id: uuid(),
+    desc: 'Coffee',
+    check: false
+  },
+]
 
 function App() {
+  const [newListItem, setNewListItem] = useState<string>("");
+  const [editEdit, setEditItem] = useState<string>(""); // item id
+  const [editItemInput, setEditItemInput] = useState<string>(""); // desc input
+
   return (
     <div className="App">
       <header className="App-header">
