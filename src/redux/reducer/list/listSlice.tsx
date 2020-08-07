@@ -1,7 +1,7 @@
 
 import uuid from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../store';
+import { AppThunk, RootState, store } from '../../store';
 import { counterSlice } from '../counter/counterSlice';
 
 
@@ -80,7 +80,7 @@ export const selectList = (state: RootState) => state.list;
 
 // COMPONENT USING REDUX AS STATE MANAGING
 export const listReducer = {
-    actions: listSlice.actions,
+    ...listSlice.actions,
     reducer: (state: RootState) => state.list
 }
 

@@ -10,14 +10,13 @@ import { listReducer } from '../../redux/reducer/list/listSlice';
 
 
 export const MyList = () => {
-    const { actions, reducer } = listReducer
+    const { reducer, add, remove, update } = listReducer
     const list = useSelector(reducer);
-    // const list = useSelector(selectList);
     const dispatch = useDispatch();
 
     const [itemName, setItemName] = useState('');
     const handleAdd = () => {
-        dispatch(actions.add({
+        dispatch(add({
             id: uuid(),
             desc: itemName,
             // check: false // default check to false when added
@@ -28,11 +27,11 @@ export const MyList = () => {
         // }))
     }
     const handleRemove = (id: string) => {
-        dispatch(actions.remove(id))
+        dispatch(remove(id))
     }
     const handleCheck = (id: string) => {
         console.log('hit')
-        dispatch(actions.update(id))
+        dispatch(update(id))
     }
 
     return (
@@ -61,6 +60,7 @@ export const MyList = () => {
                     <input
                         type="checkbox"
                         checked={item.check}
+                        onChange={(e)=>(e)}
                         />
                         <span 
                             onClick={() => handleCheck(item.id)}
