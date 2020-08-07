@@ -1,47 +1,8 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { Counter } from './component/counter/Counter';
 import './App.css';
-import uuid from 'uuid';
-
-type listType = {
-  id: string;
-  desc: string;
-  check: boolean;
-}[]
-
-const myList: listType = [
-  {
-    id: uuid(),
-    desc: 'Gloves',
-    check: false
-  },
-  {
-    id: uuid(),
-    desc: 'Keys',
-    check: true
-  },
-  {
-    id: uuid(),
-    desc: 'Phone',
-    check: true
-  },
-  {
-    id: uuid(),
-    desc: 'Mask',
-    check: true
-  },
-  {
-    id: uuid(),
-    desc: 'Backpack',
-    check: true
-  },
-  {
-    id: uuid(),
-    desc: 'Coffee',
-    check: false
-  },
-]
+import { MyList } from './component/list/MyList';
 
 function App() {
   const [newListItem, setNewListItem] = useState<string>("");
@@ -53,6 +14,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
+        <MyList />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
