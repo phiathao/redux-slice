@@ -1,26 +1,77 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listReducer } from '../../redux/reducer/list/listSlice';
-import { RootState } from '../../redux/store';
+import styles from './MyList.module.css'
 import uuid from 'uuid';
+
+
+//Component is using this reducer for its state managing
+import { listReducer } from '../../redux/reducer/list/listSlice';
+// import { selectList, add, update, remove } from '../../redux/reducer/list/listSlice';
+
 
 export const MyList = () => {
     const { actions, reducer } = listReducer
     const list = useSelector(reducer);
+    // const list = useSelector(selectList);
     const dispatch = useDispatch();
-    console.log(actions, list)
+
+    const [itemName, setItemName] = useState('');
     const handleAdd = () => {
         dispatch(actions.add({
             id: uuid(),
-            desc: 'New',
-            check: false
+            desc: itemName,
+            // check: false // default check to false when added
         }))
+        // dispatch(add({
+        //     id: uuid(),
+        //     desc: 'New',
+        // }))
     }
+    const handleRemove = (id: string) => {
+        dispatch(actions.remove(id))
+    }
+    const handleCheck = (id: string) => {
+        console.log('hit')
+        dispatch(actions.update(id))
+    }
+
     return (
-        <div>
-            <div>
-                <button onClick={handleAdd}>Test</button>
+        <>
+            <div className={styles.row}>
+                <input
+                    className={styles.textbox}
+                    aria-label="Item to add"
+                    placeholder="Item Name"
+                    value={itemName}
+                    onChange={e => setItemName(e.target.value)}
+                />
+                <button
+                    className={styles.button}
+                    disabled={!itemName}
+                    onClick={handleAdd}>Add Item</button>
             </div>
-        </div>
+            {list.map(item =>
+                <div className={styles.row} key={item.id}>
+                    <input
+                        className={styles.textbox}
+                        disabled
+                        value={item.desc}
+                    />
+                    <div className={styles.checkBoxContainer}>
+                    <input
+                        type="checkbox"
+                        checked={item.check}
+                        />
+                        <span 
+                            onClick={() => handleCheck(item.id)}
+                            className={styles.checkmark}
+                            />
+                        </div>
+                    <button
+                        className={styles.button}
+                        onClick={() => handleRemove(item.id)}>Remove</button>
+                </div>
+            )}
+        </>
     );
 }

@@ -13,7 +13,7 @@ export function Counter() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
-
+  // TODO instead of adding a number, get total of item from other reducer
   return (
     <div>
       <div className={styles.row}>

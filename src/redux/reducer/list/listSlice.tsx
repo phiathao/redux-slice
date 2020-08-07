@@ -46,21 +46,24 @@ const initialState: listType = [
 ]
 const actions = {
     update: (state, action: PayloadAction<string>) => {
-        let item = state.find(item => item.id === action.payload)
+        let item = state.find(item => item.id === action.payload);
         if (item) {
             item.check = !item.check
         }
     },
-    add: (state, action: PayloadAction<listItemType>) => {
+    add: (state, action: PayloadAction<Partial<listItemType>>) => {
         const { payload } = action
         state.push({
             id: payload.id,
             desc: payload.desc,
             check: false
-        })
+        });
     },
     remove: (state, action: PayloadAction<string>) => {
-        state = state.filter(item => item.id !== action.payload)
+        let index = state.findIndex(item => item.id === action.payload);
+        if(index !== -1){
+            state.splice(index, 1);
+        }
     }
 }
 
@@ -70,12 +73,15 @@ export const listSlice = createSlice({
     reducers: actions,
 });
 
-// const { increment, decrement, incrementByAmount } = counterSlice.actions;
+
+// USE FOR COMPONENT DEALING WITH PART OF THE REDUX STATE
+export const { update, add, remove } = listSlice.actions;
+export const selectList = (state: RootState) => state.list;
+
+// COMPONENT USING REDUX AS STATE MANAGING
 export const listReducer = {
     actions: listSlice.actions,
     reducer: (state: RootState) => state.list
 }
-
-// export const { update, add, remove } = listSlice.actions;
 
 export default listSlice.reducer;
